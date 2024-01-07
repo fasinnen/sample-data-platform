@@ -12,10 +12,10 @@ SELECT
     CASE WHEN neighborhood_district IN ('None', '-') THEN NULL ELSE neighborhood_district END AS neighborhood_district,
     point,
     -- Date-related columns
-    CASE WHEN incident_date IN ('None', '-') THEN NULL ELSE incident_date END AS incident_date,
-    CASE WHEN alarm_dttm IN ('None', '-') THEN NULL ELSE alarm_dttm END AS alarm_dttm,
-    CASE WHEN arrival_dttm IN ('None', '-') THEN NULL ELSE arrival_dttm END AS arrival_dttm,
-    CASE WHEN close_dttm IN ('None', '-') THEN NULL ELSE close_dttm END AS close_dttm,
+    CASE WHEN incident_date IN ('None', '-') THEN NULL ELSE STRPTIME(incident_date, '%Y-%m-%dT%H:%M:%S') END AS incident_date,
+    CASE WHEN alarm_dttm IN ('None', '-') THEN NULL ELSE STRPTIME(alarm_dttm, '%Y-%m-%dT%H:%M:%S') END AS alarm_dttm,
+    CASE WHEN arrival_dttm IN ('None', '-') THEN NULL ELSE STRPTIME(arrival_dttm, '%Y-%m-%dT%H:%M:%S') END AS arrival_dttm,
+    CASE WHEN close_dttm IN ('None', '-') THEN NULL ELSE STRPTIME(close_dttm, '%Y-%m-%dT%H:%M:%S') END AS close_dttm,
     day,
     -- Detector-related columns
     CASE WHEN detectors_present IN ('None', '-') THEN NULL ELSE detectors_present END AS detectors_present,
