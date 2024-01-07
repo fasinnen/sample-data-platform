@@ -1,0 +1,11 @@
+transformation_engine:
+  outputs:
+    dev:
+      type: duckdb
+      path: ../duckdb/local_wh.db
+      threads: 1
+    prod:
+      type: duckdb
+      path: ../duckdb/local_wh.db
+      threads: 4
+  target: dev
