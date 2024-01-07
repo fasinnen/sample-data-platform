@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: bronze
+    description: Tables ingested on a daily basis from common datasets into bronze
+    tables:
+      - name: san_francisco_fire_incidents

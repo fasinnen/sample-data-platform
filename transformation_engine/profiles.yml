@@ -3,7 +3,7 @@ transformation_engine:
     dev:
       type: duckdb
       path: ../duckdb/local_wh.db
-      threads: 1
+      threads: 2
     prod:
       type: duckdb
       path: ../duckdb/local_wh.db

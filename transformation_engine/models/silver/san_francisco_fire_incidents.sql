@@ -1,0 +1,72 @@
+{{ config(schema='silver') }}
+
+SELECT 
+    CASE WHEN id IN ('None', '-') THEN NULL ELSE id END AS id,
+    incident_number,
+    exposure_number,
+    -- Address-related columns
+    CASE WHEN address IN ('None', '-') THEN NULL ELSE address END AS address,
+    CASE WHEN city IN ('None', '-') THEN NULL ELSE city END AS city,
+    zipcode,
+    supervisor_district,
+    CASE WHEN neighborhood_district IN ('None', '-') THEN NULL ELSE neighborhood_district END AS neighborhood_district,
+    point,
+    -- Date-related columns
+    CASE WHEN incident_date IN ('None', '-') THEN NULL ELSE incident_date END AS incident_date,
+    CASE WHEN alarm_dttm IN ('None', '-') THEN NULL ELSE alarm_dttm END AS alarm_dttm,
+    CASE WHEN arrival_dttm IN ('None', '-') THEN NULL ELSE arrival_dttm END AS arrival_dttm,
+    CASE WHEN close_dttm IN ('None', '-') THEN NULL ELSE close_dttm END AS close_dttm,
+    day,
+    -- Detector-related columns
+    CASE WHEN detectors_present IN ('None', '-') THEN NULL ELSE detectors_present END AS detectors_present,
+    CASE WHEN detector_type IN ('None', '-') THEN NULL ELSE detector_type END AS detector_type,
+    CASE WHEN detector_operation IN ('None', '-') THEN NULL ELSE detector_operation END AS detector_operation,
+    CASE WHEN detector_effectiveness IN ('None', '-') THEN NULL ELSE detector_effectiveness END AS detector_effectiveness,
+    CASE WHEN detector_failure_reason IN ('None', '-') THEN NULL ELSE detector_failure_reason END AS detector_failure_reason,
+    CASE WHEN automatic_extinguishing_system_present IN ('None', '-') THEN NULL ELSE automatic_extinguishing_system_present END AS automatic_extinguishing_system_present,
+    CASE WHEN automatic_extinguishing_sytem_type IN ('None', '-') THEN NULL ELSE automatic_extinguishing_sytem_type END AS automatic_extinguishing_sytem_type,
+    CASE WHEN automatic_extinguishing_sytem_perfomance IN ('None', '-') THEN NULL ELSE automatic_extinguishing_sytem_perfomance END AS automatic_extinguishing_sytem_perfomance,
+    CASE WHEN automatic_extinguishing_sytem_failure_reason IN ('None', '-') THEN NULL ELSE automatic_extinguishing_sytem_failure_reason END AS automatic_extinguishing_sytem_failure_reason,
+    number_of_sprinkler_heads_operating,
+    -- Unit-related columns
+    suppression_units,
+    suppression_personnel,
+    ems_units,
+    ems_personnel,
+    other_units,
+    other_personnel,
+    CASE WHEN first_unit_on_scene IN ('None', '-') THEN NULL ELSE first_unit_on_scene END AS first_unit_on_scene,
+    -- Casualty-related columns
+    fire_fatalities,
+    fire_injuries,
+    civilian_fatalities,
+    civilian_injuries,
+    -- Alarm and Action-related columns
+    call_number,
+    number_of_alarms,
+    CASE WHEN primary_situation IN ('None', '-') THEN NULL ELSE primary_situation END AS primary_situation,
+    CASE WHEN mutual_aid IN ('None', '-') THEN NULL ELSE mutual_aid END AS mutual_aid,
+    CASE WHEN action_taken_primary IN ('None', '-') THEN NULL ELSE action_taken_primary END AS action_taken_primary,
+    CASE WHEN action_taken_secondary IN ('None', '-') THEN NULL ELSE action_taken_secondary END AS action_taken_secondary,
+    CASE WHEN action_taken_other IN ('None', '-') THEN NULL ELSE action_taken_other END AS action_taken_other,
+    -- Fire-related columns
+    estimated_contents_loss,
+    estimated_property_loss,
+    CASE WHEN area_of_fire_origin IN ('None', '-') THEN NULL ELSE area_of_fire_origin END AS area_of_fire_origin,
+    CASE WHEN ignition_cause IN ('None', '-') THEN NULL ELSE ignition_cause END AS ignition_cause,
+    CASE WHEN ignition_factor_primary IN ('None', '-') THEN NULL ELSE ignition_factor_primary END AS ignition_factor_primary,
+    CASE WHEN ignition_factor_secondary IN ('None', '-') THEN NULL ELSE ignition_factor_secondary END AS ignition_factor_secondary,
+    CASE WHEN heat_source IN ('None', '-') THEN NULL ELSE heat_source END AS heat_source,
+    CASE WHEN item_first_ignited IN ('None', '-') THEN NULL ELSE item_first_ignited END AS item_first_ignited,
+    CASE WHEN human_factors_associated_with_ignition IN ('None', '-') THEN NULL ELSE human_factors_associated_with_ignition END AS human_factors_associated_with_ignition,
+    -- Structure-related columns
+    CASE WHEN structure_type IN ('None', '-') THEN NULL ELSE structure_type END AS structure_type,
+    CASE WHEN structure_status IN ('None', '-') THEN NULL ELSE structure_status END AS structure_status,
+    floor_of_fire_origin,
+    CASE WHEN fire_spread IN ('None', '-') THEN NULL ELSE fire_spread END AS fire_spread,
+    no_flame_spead,
+    number_of_floors_with_minimum_damage,
+    number_of_floors_with_significant_damage,
+    number_of_floors_with_heavy_damage,
+    number_of_floors_with_extreme_damage
+FROM {{ source('bronze', 'san_francisco_fire_incidents') }}

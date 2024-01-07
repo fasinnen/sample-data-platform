@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: san_francisco_fire_incidents
+    description: >
+      Fire Incidents includes a summary of each (non-medical) incident to which the SF Fire Department responded. Each incident record includes the call number, incident number, address, number and type of each unit responding, call type (as determined by dispatch), prime situation (field observation), actions taken, and property loss.
+    columns:
+      - name: id
+        description: >
+          Unique ID for the record
+        tests:
+          - unique
+          - not_null
