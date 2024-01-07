@@ -5,6 +5,8 @@ SELECT
     incident_number,
     exposure_number,
     -- Address-related columns
+    CASE WHEN battalion IN ('None', '-') THEN NULL ELSE battalion END AS battalion,
+    CASE WHEN station_area IN ('None', '-') THEN NULL ELSE station_area END AS station_area,
     CASE WHEN address IN ('None', '-') THEN NULL ELSE address END AS address,
     CASE WHEN city IN ('None', '-') THEN NULL ELSE city END AS city,
     zipcode,
