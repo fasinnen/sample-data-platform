@@ -2,11 +2,11 @@ import os
 from generic_consumer import GenericConsumer
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 
-def run_dbt():
-    os.chdir('transformation_engine')
-    dbt = dbtRunner()
+def run_dbt(cli_args: list = ["run"]):
+    if cli_args == ["run"]:
+        os.chdir('transformation_engine')
 
-    cli_args = ["run"]
+    dbt = dbtRunner()
     res: dbtRunnerResult = dbt.invoke(cli_args)
     
     for r in res.result:
@@ -17,3 +17,4 @@ if __name__ == '__main__':
 
     consumer.ingest()
     run_dbt()
+    run_dbt(["test"])
