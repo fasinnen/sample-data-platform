@@ -14,7 +14,7 @@ def run_dbt(cli_args: list = ["run"]):
 
 if __name__ == '__main__':
     consumer = GenericConsumer()
-
     consumer.ingest()
+
     run_dbt()
     run_dbt(["test"])

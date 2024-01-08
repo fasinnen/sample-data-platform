@@ -1,6 +1,6 @@
 source_catalog:
   - name: san_francisco_fire_incidents
-    url: https://data.sfgov.org/resource/wr8u-xric.json
-    format: json
+    url: https://data.sfgov.org/api/views/wr8u-xric/rows.csv?accessType=DOWNLOAD&api_foundry=true
+    format: csv
     upsert_keys:
-      - id
+      - ID
