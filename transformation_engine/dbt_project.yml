@@ -33,4 +33,4 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   transformation_engine:
     silver:
-      materialized: view
+      +materialized: view

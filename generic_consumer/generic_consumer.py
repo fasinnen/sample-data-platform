@@ -48,23 +48,31 @@ class GenericConsumer:
         with open(data_path, 'wb') as file:
             file.write(response.content)
 
-    def table_exists(self, table_name):
+    def _table_exists(self, table_name):
         result = self.conn.execute(f"SELECT * FROM information_schema.tables WHERE table_schema = 'bronze' AND table_name = '{table_name}'").fetchall()
         return len(result) > 0
+    
+    def _read_source_data_expr(self, source, path):
+        source_format = source['format']
+
+        if source_format == 'csv':
+            return f"select * from read_csv_auto('{path}', sample_size=-1)"
+        elif source_format == 'json':
+            return f"select * from read_json_auto('{path}')"
 
     def _ingest_data_into_bronze(self, source):
         table_name = f'bronze.{source["name"]}'
 
         try:
-            if not self.table_exists(table_name):
+            if not self._table_exists(table_name):
                 recursive_path = Path(f'landing/{source["name"]}/**/data.{source["format"]}')
-                full_df = self.conn.sql(f"select * from '{recursive_path}'").df()
+                full_df = self.conn.sql(self._read_source_data_expr(source, recursive_path)).df()
                 full_df.drop_duplicates(subset=source["upsert_keys"], inplace=True)
 
                 self.conn.execute(f"CREATE OR REPLACE TABLE {table_name} AS SELECT * FROM full_df")
             else:
                 incremental_path = Path(f'landing/{source["name"]}/day={self.execution_date}/data.{source["format"]}')
-                incremental_df = self.conn.sql(f"select * from '{incremental_path}'").df()
+                incremental_df = self.conn.sql(self._read_source_data_expr(source, incremental_path)).df()
 
                 self.conn.execute(f"INSERT OR REPLACE INTO {table_name} SELECT * FROM incremental_df")
             print(f'Successfully ingest data for source: {source["name"]} into bronze table: {table_name}')
