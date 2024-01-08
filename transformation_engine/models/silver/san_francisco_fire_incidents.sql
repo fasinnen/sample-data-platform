@@ -9,7 +9,8 @@ SELECT
     CASE WHEN "City" IN ('None', '-') THEN NULL ELSE "City" END AS city,  
     "zipcode" AS zipcode,  
     "Supervisor District" AS supervisor_district,  
-    CASE WHEN "neighborhood_district" IN ('None', '-') THEN NULL ELSE "neighborhood_district" END AS neighborhood_district,  
+    IFNULL(CASE WHEN "neighborhood_district" IN ('None', '-') THEN NULL ELSE "neighborhood_district" END, 'NOT_INFORMED') AS neighborhood_district,
+    CASE WHEN "Battalion" IN ('None', '-') THEN NULL ELSE "Battalion" END AS battalion,   
     "point" AS point,  
     -- Date-related columns  
     CASE WHEN "Incident Date" IN ('None', '-') THEN NULL ELSE "Incident Date" END AS incident_date,  

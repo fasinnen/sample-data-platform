@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: fact_monthly_fire_incidents
+    description: >
+      It presents a fact-like snapshot of the fire incidents that occurred in San Francisco through a month granularity.
+    columns:
+      - name: year
+        description: >
+          Year of the fire incidents.
+      - name: month
+        description: >
+          Month of the fire incidents.
+      - name: district
+        description: >
+          District of the fire incidents.
+        tests:
+          - not_null
+      - name: battalion
+        description: >
+          Battalion of the fire department that responded to the fire incidents.
+        tests:
+          - not_null
+      - name: number_incidents
+        description: >
+          Number of fire incidents that occurred in the district and battalion in the given month.
+        tests:
+          - not_null
+      - name: fire_fatalities
+        description: >
+          Number of fire fatalities that occurred in the district and battalion in the given month.
+        tests:
+          - not_null
+      - name: fire_injuries
+        description: >
+          Number of fire injuries that occurred in the district and battalion in the given month.
+        tests:
+          - not_null
+      - name: civilian_fatalities
+        description: >
+          Number of civilian fatalities that occurred in the district and battalion in the given month.
+        tests:
+          - not_null
+      - name: civilian_injuries
+        description: >
+          Number of civilian injuries that occurred in the district and battalion in the given month.
+        tests:
+          - not_null
+      - name: estimated_property_loss
+        description: >
+          Estimated property loss that occurred in the district / battalion in the given month.
+        tests:
+          - not_null
+      - name: estimated_contents_loss
+        description: >
+          Estimated contents loss that occurred in the district / battalion in the given month.
+        tests:
+          - not_null

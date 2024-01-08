@@ -34,3 +34,5 @@ models:
   transformation_engine:
     silver:
       +materialized: view
+    gold:
+      +materialized: table
